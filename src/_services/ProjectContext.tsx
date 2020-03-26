@@ -18,9 +18,20 @@ export const ProjectProvider = ({ children, username }: ContextProps) => {
 
     useEffect(() => {
         console.log("Starting ProjectContext");
-        loadProject(username);
+        fetch('http://localhost:8080/v1/projects')
+            .then(response => {
+                return response.json();
+            })
+            .then(dataItems => {
+                setProjectList(dataItems);
+                
+                dataItems.forEach((element: string) => {
+                    console.log(element);
+                });
+            })
+            .catch(console.error);
     }, []);
-
+/*
     const loadProject = async (username: string) => {
         console.log(`Loading projects for ${username}...`);
     
@@ -37,7 +48,7 @@ export const ProjectProvider = ({ children, username }: ContextProps) => {
             })
             .catch(console.error);
     };
-    
+*/
 
     return (
         <ProjectContext.Provider value={{projectList, setProjectList}}>{children}</ProjectContext.Provider>

@@ -9,13 +9,10 @@ const useProjects = () => useContext(ProjectContext);
 
 export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
     const [project, setProject] = useState<string>();
-    const [projectList, setProjectList] = useState<string[]>();
     const projects = useProjects();
 
     useEffect(() => {
         setProject('Loews');
-        console.log(projects);
-        setProjectList(projects?.projectList);
     }, []);
 
     const logProjects = () => {
@@ -23,18 +20,18 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
     }
 
     return project ? (
-        <ProjectProvider username="Anthony">
-            <div className="Dashboard">
-                <div>Welcome {username}</div>
-                <div>Projects:</div>
-                <table>
-                    <tbody>
-                        {projectList?.map(focus => <tr key={focus}><td>{focus}</td></tr>)}
-                    </tbody>
-                </table>
-                <Button variant="contained" color="primary" onClick={logProjects}>Hello World</Button>
-            </div>
-        </ProjectProvider>
+        <div className="Dashboard">
+            <table>
+                <thead>
+                    <tr><th>Welcome {username}</th></tr>
+                    <tr><th>Projects</th></tr>
+                </thead>
+                <tbody>
+                    {projects?.projectList?.map(focus => <tr key={focus}><td>{focus}</td></tr>)}
+                </tbody>
+            </table>
+            <Button variant="contained" color="primary" onClick={logProjects}>Hello World</Button>
+        </div>
     ) : (
         <div>Loading</div>
     );

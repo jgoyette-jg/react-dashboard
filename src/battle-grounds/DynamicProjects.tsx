@@ -15,9 +15,7 @@ export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({userna
     
 
     return (
-        <ProjectProvider username="Mary">
-            <div>{loader?.projectList}</div>
-        </ProjectProvider>
+        <div>{loader?.projectList}</div>
     );
 };
 
