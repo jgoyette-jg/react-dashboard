@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useContext } from 'react';
 import { Button } from '@material-ui/core';
-import ProjectContext, { ProjectProvider } from '../_services/ProjectContext';
+import ProjectContext from '../_services/ProjectContext';
 
 type DashboardProps = {
     username: string,

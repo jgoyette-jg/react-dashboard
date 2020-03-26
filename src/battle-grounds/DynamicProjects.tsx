@@ -1,5 +1,5 @@
 import React, { useContext, FunctionComponent, useEffect } from 'react';
-import ProjectContext, { ProjectProvider } from '../_services/ProjectContext';
+import ProjectContext from '../_services/ProjectContext';
 
 
 type DynamicProjectsProps = {
@@ -10,7 +10,7 @@ export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({userna
     const loader = useContext(ProjectContext);
 
     useEffect(() => {
-        console.log(`The Project list is: ${loader?.projectList}`);
+
     }, []);
     
 
