@@ -14,7 +14,7 @@ type DynamicProjectsProps = {
 export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({username}) => {
     const loader = useContext(ProjectContext);
     return (
-        <ProjectContext.Provider value={loadedProjects('')}>
+        <ProjectContext.Provider value={loadedProjects(username)}>
         <div>{loader}</div>
         </ProjectContext.Provider>
     );
