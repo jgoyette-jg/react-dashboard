@@ -14,11 +14,12 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
 
     useEffect(() => {
         setProject('Loews');
+        console.log(projects);
         setProjectList(projects);
     }, []);
 
     return project ? (
-        <ProjectProvider>
+        <ProjectProvider username="Anthony">
             <div className="Dashboard">
                 <div>Welcome {username}</div>
                 <div>Projects:</div>

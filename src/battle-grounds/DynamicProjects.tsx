@@ -11,7 +11,7 @@ export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({userna
     
 
     return (
-        <ProjectProvider>
+        <ProjectProvider username="Bob">
         </ProjectProvider>
     );
 };

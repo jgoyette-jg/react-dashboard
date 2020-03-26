@@ -6,17 +6,18 @@ const ProjectContext = createContext(defaultProjects);
 
 type ContextProps = {
     children: React.ReactNode,
+    username: string
 }
 
-export const ProjectProvider = ({ children }: ContextProps) => {
+export const ProjectProvider = ({ children, username }: ContextProps) => {
     const [projectList, setProjectList] = useState(defaultProjects);
 
     useEffect(() => {
-        loadProject('');
+        loadProject(username);
     }, []);
     
     const loadProject = async (username: string) => {
-        console.log("Loading projects...");
+        console.log(`Loading projects for ${username}...`);
     
         fetch('http://localhost:8080/v1/projects')
             .then(response => {
