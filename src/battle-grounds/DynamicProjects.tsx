@@ -1,11 +1,11 @@
 import React, { useContext, FunctionComponent } from 'react';
+import ProjectContext from '../_services/ProjectContext';
 
 const loadedProjects = (message: string) => {
     console.log(message);
     return "Welcome " + message;
 };
 
-const ProjectContext = React.createContext('');
 
 type DynamicProjectsProps = {
     username: string,
