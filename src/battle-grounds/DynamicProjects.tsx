@@ -10,7 +10,9 @@ export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({userna
     const loader = useContext(ProjectContext);
 
     return (
-        <ProjectContext.Provider value={loadProjects(username)}>
+        <ProjectContext.Provider value={{
+            projectList: ["Apple", "Orange"]
+        }}>
         <div>{loader}</div>
         </ProjectContext.Provider>
     );

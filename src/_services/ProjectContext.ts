@@ -1,5 +1,14 @@
 import React, { useState, useContext, FunctionComponent } from 'react';
 
+type ContextProps = {
+    projectList: string[],
+}
+export const ProjectContext = React.createContext<Partial<ContextProps>>({});
+
+export default ProjectContext;
+
+
+/*
 const [projectList, setProjectList] = useState();
 
 const ProjectContext = React.createContext(['']);
@@ -36,6 +45,6 @@ const ProjectProvider = () => {
     );
 };
 
-export default ProjectContext;
 
 export { ProjectProvider };
+*/
