@@ -1,11 +1,34 @@
 import React, { useState, useContext, FunctionComponent } from 'react';
 
 type ContextProps = {
-    projectList: string[],
+    data: string[],
 }
 export const ProjectContext = React.createContext<Partial<ContextProps>>({});
 
 export default ProjectContext;
+
+export const ProjectProvider = ({
+    data
+}: ContextProps) => {
+    const [projectList, setProjectList] = React.useState([""])
+
+    const loadProject = async (username: string) => {
+        console.log("Loading projects...");
+        const loader = useContext(ProjectContext);
+    
+        fetch('http://localhost:8080/v1/projects')
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                setProjectList(data);
+                data.forEach((element: string) => {
+                    console.log(element);
+                });
+            })
+            .catch(console.error);
+    };
+};
 
 
 /*
