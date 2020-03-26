@@ -2,7 +2,7 @@ import React, { useContext, FunctionComponent } from 'react';
 
 const loadedProjects = (message: string) => {
     console.log(message);
-    return "";
+    return "Welcome " + message;
 };
 
 const ProjectContext = React.createContext('');

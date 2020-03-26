@@ -35,7 +35,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
             <div>Projects:</div>
             <table>
                 <tbody>
-                    {projectList?.map(focus => <tr><td>{focus}</td></tr>)}
+                    {projectList?.map(focus => <tr key={focus}><td>{focus}</td></tr>)}
                 </tbody>
             </table>
             <Button variant="contained" color="primary">Hello World</Button>
