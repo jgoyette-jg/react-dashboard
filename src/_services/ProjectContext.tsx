@@ -1,8 +1,12 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useContext } from 'react';
 
 const defaultProjects = [""];
+type ProjectContextType = {
+    projectList: string[];
+    setProjectList: (value: string[]) => void;
+};
 
-const ProjectContext = createContext(defaultProjects);
+const ProjectContext = createContext<ProjectContextType|undefined>(undefined);
 
 type ContextProps = {
     children: React.ReactNode,
@@ -13,9 +17,10 @@ export const ProjectProvider = ({ children, username }: ContextProps) => {
     const [projectList, setProjectList] = useState(defaultProjects);
 
     useEffect(() => {
+        console.log("Starting ProjectContext");
         loadProject(username);
     }, []);
-    
+
     const loadProject = async (username: string) => {
         console.log(`Loading projects for ${username}...`);
     
@@ -35,7 +40,7 @@ export const ProjectProvider = ({ children, username }: ContextProps) => {
     
 
     return (
-        <ProjectContext.Provider value={projectList}>{children}</ProjectContext.Provider>
+        <ProjectContext.Provider value={{projectList, setProjectList}}>{children}</ProjectContext.Provider>
     );
 };
 

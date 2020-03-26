@@ -15,8 +15,12 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
     useEffect(() => {
         setProject('Loews');
         console.log(projects);
-        setProjectList(projects);
+        setProjectList(projects?.projectList);
     }, []);
+
+    const logProjects = () => {
+        console.log(projects);
+    }
 
     return project ? (
         <ProjectProvider username="Anthony">
@@ -28,7 +32,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
                         {projectList?.map(focus => <tr key={focus}><td>{focus}</td></tr>)}
                     </tbody>
                 </table>
-                <Button variant="contained" color="primary">Hello World</Button>
+                <Button variant="contained" color="primary" onClick={logProjects}>Hello World</Button>
             </div>
         </ProjectProvider>
     ) : (
