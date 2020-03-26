@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { Button } from '@material-ui/core';
 
 type DashboardProps = {
     username: string,
@@ -10,6 +11,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
 
     useEffect(() => {
         setProject('Loews');
+        loadProjects();
     }, []);
 
     const loadProjects = async () => {
@@ -19,7 +21,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
                 return response.json();
             })
             .then(data => {
-                
+                setProjectList(data);
                 data.forEach((element: string) => {
                     console.log(element);
                 });
@@ -28,17 +30,15 @@ export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
     }
 
     return project ? (
-        <div>
-        <div>Welcome {username}</div>
-        <div>Projects:</div>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Projects will be listed here</td>
-                </tr>
-            </tbody>
-        </table>
-        <button onClick={loadProjects}>Retrieve Projects</button>
+        <div className="Dashboard">
+            <div>Welcome {username}</div>
+            <div>Projects:</div>
+            <table>
+                <tbody>
+                    {projectList?.map(focus => <tr><td>{focus}</td></tr>)}
+                </tbody>
+            </table>
+            <Button variant="contained" color="primary">Hello World</Button>
         </div>
     ) : (
         <div>Loading</div>
