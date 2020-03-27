@@ -159,7 +159,7 @@ export default function NavBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Beacon
+                        Project Dashboards
                     </Typography>
                 </Toolbar>
             </AppBar>
