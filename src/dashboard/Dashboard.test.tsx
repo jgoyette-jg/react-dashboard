@@ -4,6 +4,6 @@ import Dashboard from './Dashboard';
 
 test('it renders the title', () => {
     const { getByText } = render(<Dashboard username="User1" />);
-    const title = getByText(/Welcome User1/i);
+    const title = getByText(/Hello World/i);
     expect(title).toBeInTheDocument();
 })
