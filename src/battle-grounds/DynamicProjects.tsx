@@ -1,12 +1,9 @@
 import React, { useContext, FunctionComponent, useEffect } from 'react';
 import ProjectContext from '../_services/ProjectContext';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
+
 
 type DynamicProjectsProps = {
     username: string,
@@ -19,24 +16,25 @@ export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({userna
 
     }, []);
     
+    const handleClick = (item: string) => {
+        console.log(`Clicked ${item}`);
+    };
+
+    const handleDelete = (item: string) => {
+        console.log(`Deleting ${item}`);
+    };
 
     return (
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Focus</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                {loader?.projectList?.map(row => (
-                    <TableRow key={row}>
-                        <TableCell component="th" scope="row"><a href="3">{row}</a></TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <div>
+            {loader?.projectList?.map(row => (
+                <Chip key={row} 
+                    label={row} 
+                    color="primary"
+                    onClick={() => handleClick(row)}
+                    onDelete={() => handleDelete(row)}
+                    icon={<FaceIcon />} />
+            ))}
+        </div>
     );
 };
 
