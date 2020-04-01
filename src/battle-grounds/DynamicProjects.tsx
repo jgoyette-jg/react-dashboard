@@ -1,5 +1,5 @@
 import React, { useContext, FunctionComponent, useEffect } from 'react';
-import ProjectContext from '../_services/ProjectContext';
+import ProgramContext from '../_services/ProgramContext';
 
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
@@ -10,7 +10,7 @@ type DynamicProjectsProps = {
 };
 
 export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({username}) => {
-    const loader = useContext(ProjectContext);
+    const loader = useContext(ProgramContext);
 
     useEffect(() => {
 
@@ -26,12 +26,12 @@ export const DynamicProjects: FunctionComponent<DynamicProjectsProps> = ({userna
 
     return (
         <div>
-            {loader?.projectList?.map(row => (
-                <Chip key={row} 
+            {loader?.programs?.map(row => (
+                <Chip key={row.id}
                     label={row} 
                     color="primary"
-                    onClick={() => handleClick(row)}
-                    onDelete={() => handleDelete(row)}
+                    onClick={() => handleClick(row.name)}
+                    onDelete={() => handleDelete(row.name)}
                     icon={<FaceIcon />} />
             ))}
         </div>

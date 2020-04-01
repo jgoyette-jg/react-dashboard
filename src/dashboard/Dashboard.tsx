@@ -1,62 +1,154 @@
-import React, { FunctionComponent, useEffect, useState, useContext } from 'react';
-import { Button } from '@material-ui/core';
+import React, { FunctionComponent, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ProjectContext from '../_services/ProjectContext';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import ProgramContext, {Program} from '../_services/ProgramContext';
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import {ExpandMore} from "@material-ui/icons";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Card from "@material-ui/core/Card";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import moment from "moment";
 
-const useStyles = makeStyles({
-    table: {
-      minWidth: 650,
-      maxWidth: 700,
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
     },
-});
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    lightGrey: {
+        color: '#D3D3D3'
+    },
+    panelDirection: {
+        flexDirection: 'column'
+    },
+    reverseButtonDirection: {
+        flexDirection: 'row-reverse'
+    },
+    textAlignCenter: {
+        textAlign: 'center'
+    }
+}));
+
 
 type DashboardProps = {
     username: string,
 };
-const useProjects = () => useContext(ProjectContext);
+
+const usePrograms = () => useContext(ProgramContext);
+
+const determineDiffInDays = (endDate: string) => {
+    const diff = moment(endDate).diff(moment(), 'days');
+    return diff > 0 ? diff : 0;
+};
+
+const buildCards = (program: Program, classes: any) => {
+    return program.participants.map((participant => {
+        return (<Grid item xs={12} md={6} lg={4}>
+            <Card className={classes.root}>
+                <CardHeader
+                    title={participant.name}
+                />
+                <CardContent>
+                    <Grid container spacing={3}>
+                        <Grid item  xs={12}>
+                            <div>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    Overall maturity
+                                </Typography>
+                            </div>
+                            <div>
+                                <LinearProgress variant="determinate" value={participant.overallMaturity}/>
+                            </div>
+                        </Grid>
+                        <Grid item  xs={4} lg={4} className={classes.textAlignCenter}>
+                            <div>
+                                <Typography>{participant.actions.length}</Typography>
+                                <Typography>Action items</Typography>
+                            </div>
+                        </Grid>
+                        <Grid item  xs={12} lg={4} className={classes.textAlignCenter}>
+                            <div>
+                                <div>
+                                    <Typography>{participant.actions.filter((action) => {
+                                        return action.status === "COMPLETED";
+                                    }).length}</Typography>
+                                    <Typography>Completed</Typography>
+                                </div>
+                            </div>
+                        </Grid>
+                        <Grid item  xs={12} lg={4} className={classes.textAlignCenter}>
+                            <div>
+                                <div>
+                                    <Typography>{determineDiffInDays(program.iteration.endDate)}</Typography>
+                                    <Typography>Days left</Typography>
+                                </div>
+                            </div>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+        </Grid>)
+    }))
+}
 
 export const Dashboard: FunctionComponent<DashboardProps> = ({username}) => {
-    const [project, setProject] = useState<string>();
-    const projects = useProjects();
+    const programs = usePrograms();
+
     const classes = useStyles();
 
-    useEffect(() => {
-        setProject('Loews');
-    }, []);
-
-    const logProjects = () => {
-        console.log(projects);
-    }
-
-    return project ? (
-        <div className="Dashboard">
-            <TableContainer className={classes.table} component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Focus</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                    {projects?.projectList?.map(row => (
-                        <TableRow key={row}>
-                            <TableCell component="th" scope="row"><a href="3">{row}</a></TableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Button variant="contained" color="primary" onClick={logProjects}>Hello World</Button>
+    return (
+        <div className={classes.root}>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <Typography variant="h3" gutterBottom>
+                        Dashboard
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant="h5" gutterBottom>
+                        Journeys
+                    </Typography>
+                </Grid>
+                {programs?.programs.map(program => {
+                    return (
+                        <Grid item xs={12}>
+                            <ExpansionPanel>
+                                <ExpansionPanelSummary
+                                    expandIcon={<ExpandMore />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                    className={classes.reverseButtonDirection}>
+                                    <div className={classes.panelDirection}>
+                                        <span>
+                                            {program.name}&nbsp;-&nbsp;<span className={classes.lightGrey}>{program.participants.length} participants</span>
+                                        </span>
+                                            <span>
+                                            <Typography className={classes.lightGrey}>
+                                                Iteration {program.iteration.name} - {program.iteration.startDate} - {program.iteration.endDate}
+                                            </Typography>
+                                        </span>
+                                    </div>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <div>
+                                        <Grid container spacing={3}>
+                                            {buildCards(program, classes)}
+                                        </Grid>
+                                    </div>
+                                </ExpansionPanelDetails>:
+                            </ExpansionPanel>
+                        </Grid>
+                    )
+                })}
+            </Grid>
         </div>
-    ) : (
-        <div>Loading</div>
     );
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Dashboard from './dashboard/Dashboard';
 import DynamicProjects from './battle-grounds/DynamicProjects';
-import { ProjectProvider } from './_services/ProjectContext';
+import { ProjectProvider } from './_services/ProgramContext';
 
 import {
     BrowserRouter as Router,
